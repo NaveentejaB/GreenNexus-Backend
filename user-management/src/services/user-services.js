@@ -20,6 +20,10 @@ class UserService {
         const user = await this.UserRepository.findUserExists(user_email,user_phone);
         return user;
     }
+    async findUserByEmail(user_email) {
+        const user = await this.UserRepository.findUserByEmail(user_email);
+        return user;
+    }
 }
 
 module.exports =  UserService

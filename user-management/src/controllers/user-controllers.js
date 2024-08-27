@@ -1,4 +1,5 @@
 const UserService = require("../services/user-services")
+const bcrypt = require('bcrypt')
 
 class UserController {
     constructor(){
@@ -7,16 +8,18 @@ class UserController {
 
     async registerUser(req,res) {
         try {
-            // user = {user_name,user_phone,user_age,user_location,user_email}
+            // user = {user_name,user_phone,user_age,user_location,user_email,user_password}
             const user = req.body;
-            console.log(user); 
             const existingUser = await this.service.findUserByEmailAndPhone(user.user_email,user.user_phone);
-            console.log("existingUser:",existingUser);
-            
+
             if(existingUser){
                 console.log("user already exist");
                 throw new Error("user already exist");   
             }
+            const salt = await bcrypt.genSalt(10);
+            const hashPassword = await bcrypt.hash(user.user_password, salt);
+            user.user_password = hashPassword;
+
             const result = await this.service.createUser(user);
             res.status(201).json({
                 error : false,
@@ -62,6 +65,31 @@ class UserController {
         } catch (error) {
             console.log(error);
             
+            res.status(400).json({
+                error : true,
+                message : error
+            })
+        }
+    }
+    async getUserByEmail(req,res){
+        try {
+            const {user_email} = req.body;
+            console.log("ser");
+            
+            const existingUser = await this.service.findUserByEmail(user_email);
+            if(!existingUser){
+                res.status(400).json({
+                    error : true,
+                    message : `user not found`
+                })
+            }
+            res.status(200).json({
+                error : false,
+                user : existingUser,
+                message :`user details fetched.`
+            })
+        } catch (error) {
+            console.log(error);
             res.status(400).json({
                 error : true,
                 message : error

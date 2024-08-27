@@ -23,20 +23,20 @@ const PhoneOtp = sequelize.define("PhoneOtp", {
     otp:{
         type : Sequelize.DataTypes.STRING,
         allowNull : false
-    }
-    , 
-    hooks: {
-        afterCreate: (user, options) => {
-            setTimeout(async () => {
-                try {
-                    await user.destroy();
-                    console.log(`User ${user.user_id} automatically deleted after 60 seconds.`);
-                } catch (error) {
-                    console.error(`Error deleting user ${user.user_id}:`, error);
-                }
-            }, 60000); // 60000 milliseconds = 60 seconds
+    } 
+    },{
+        hooks: {
+            afterCreate: (user, options) => {
+                setTimeout(async () => {
+                    try {
+                        await user.destroy();
+                        console.log(`User ${user.user_id} automatically deleted after 60 seconds.`);
+                    } catch (error) {
+                        console.error(`Error deleting user ${user.user_id}:`, error);
+                    }
+                }, 60000); // 60000 milliseconds = 60 seconds
+            }
         }
-    }
 })
 
 module.exports = PhoneOtp;

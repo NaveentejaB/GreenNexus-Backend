@@ -1,8 +1,8 @@
 const express = require("express");
 const {connectDB,disconnectDB,sequelize} = require("../src/config/DB")
 const winston = require('winston');
-const userRoutes = require("../src/routes/user-routes")
-const port = 3000
+const authRoutes = require("./routes/auth-routes")
+const port = 3002
 const isPortAvailable = require('is-port-available');
 
 class App {
@@ -35,7 +35,7 @@ class App {
   }
 
   setRoutes() {
-    this.app.use('/',userRoutes);
+    this.app.use('/',authRoutes);
   }
 
   async start() {

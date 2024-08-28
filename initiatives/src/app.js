@@ -3,26 +3,14 @@ const {connectDB,disconnectDB,sequelize} = require("../src/config/DB")
 const winston = require('winston');
 const userRoutes = require("../src/routes/user-routes")
 const port = 3000
-const isPortAvailable = require('is-port-available')
-const RabbitMQClient = require('./utils/rabbitMQ')
-const MailingService = require('./services/mailing-service')
-const EmailSender = require('./utils/mail-util')
+const isPortAvailable = require('is-port-available');
 
 class App {
   constructor() {
+    console.log("i am here");
     this.app = express();
+    console.log("i am here");
     this.initialize();
-    this.rabbitMQClient = new RabbitMQClient();
-    this.emailService = new EmailSender({
-      service : process.env.MAIL_HOST,
-      // host:process.env.MAIL_HOST,  //-> Host SMTP detail
-          auth:{
-              user: process.env.MAIL_USER,  //-> User's mail for authentication
-              pass: process.env.MAIL_PASS,  //-> User's password for authentication
-          }
-    });
-
-    this.notificationService = new MailingService(this.rabbitMQClient, this.emailService);
   }
 
   async initialize(){

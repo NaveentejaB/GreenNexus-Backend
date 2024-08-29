@@ -32,6 +32,7 @@ const InitiativeMember = sequelize.define("InitiativeMember", {
     Updated_at : {
         type:Sequelize.DataTypes.DATE,
         allowNull: false,
+        defaultValue : Date.now()
     }
     
 })

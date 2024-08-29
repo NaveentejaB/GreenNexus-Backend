@@ -11,6 +11,7 @@ class IntitiativeRepository {
     }
     async deleteIntitiative(initiative_id){
         const deletedIntitiative = await Initiative.destroy({where:{initiative_id : initiative_id}});
+        const deleteMembers = await InitiativeMember.destroy({where:{initiative_id:initiative_id}})
         return deletedIntitiative;
     }
     
@@ -31,9 +32,33 @@ class IntitiativeRepository {
         return intitiatives;
     }
 
+    async findAllIntitiativesOfUser(user_id){
+        const initiatives = await Initiative.findAll({where:{organizer_id:user_id}});
+        return initiatives;
+    }
+    
     async findAllInitiativeMembers(initiative_id){
-        const intitiativeMembers = await Initiative.findAll({ where : {initiative_id : initiative_id} });
+        const intitiativeMembers = await InitiativeMember.findAll({ 
+            where : {initiative_id : initiative_id},
+            attributes : ['initiative_member_id','user_id'] 
+        });
         return intitiativeMembers;
+    }
+
+    async createInitiativeMember(initiative_member_data){
+        const intitiativeMember = await InitiativeMember.create(initiative_member_data)
+        return intitiativeMember;
+    }
+    
+    async leaveInitiative(user_id,initiative_id){
+        const deleteMember = await InitiativeMember.findOne({
+            where:{
+                [Op.and] : [{user_id:user_id},{initiative_id:initiative_id}]
+            }
+        });
+        deleteMember.destroy();
+        await deleteMember.save();
+        return deleteMember;
     }
     
 }

@@ -49,6 +49,7 @@ const Initiative = sequelize.define("Initiative", {
     Updated_at : {
         type:Sequelize.DataTypes.DATE,
         allowNull: false,
+        defaultValue : Date.now()
     }
     
 })

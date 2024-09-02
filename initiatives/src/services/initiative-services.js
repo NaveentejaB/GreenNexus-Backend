@@ -10,9 +10,13 @@ class IntitiativeService {
     }
 
     async createInitiative(intitiative_data,location_data){
+        console.log(location_data);
         const newLocation = await this.LocationRespository.createLocationRow(location_data);
         intitiative_data.location_id = newLocation.location_id;
         const initiative = await this.IntitiativeRepository.createIntitiative(intitiative_data);
+        const updateLocationRow = await this.LocationRespository.updateLocationRow(
+            { initiative_id : initiative.initiative_id },newLocation.location_id
+        )
         return initiative;
     }
 

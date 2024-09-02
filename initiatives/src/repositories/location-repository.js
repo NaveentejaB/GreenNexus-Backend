@@ -12,9 +12,13 @@ class LocationRepository{
         return location;
     }
     async updateLocationRow(location_data,location_id){
-        const location = await Location.findByPk(location_id);
-        location = {...location,...location_data};
-        await location.save();
+        console.log(location_data);
+        console.log(location_id)
+        let location = await Location.update(location_data,{
+            where :{
+                location_id
+            }
+        });
         return location;
     }
     async deleteLocationRow(location_id){

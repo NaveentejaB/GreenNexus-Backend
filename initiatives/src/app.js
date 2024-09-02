@@ -1,15 +1,13 @@
 const express = require("express");
 const {connectDB,disconnectDB,sequelize} = require("../src/config/DB")
 const winston = require('winston');
-const userRoutes = require("../src/routes/user-routes")
-const port = 3000
+const initiativeRoutes = require('./routes/initiative-routes')
+const port = 3003
 const isPortAvailable = require('is-port-available');
 
 class App {
   constructor() {
-    console.log("i am here");
     this.app = express();
-    console.log("i am here");
     this.initialize();
   }
 
@@ -20,8 +18,8 @@ class App {
       this.setMiddlewares();
       this.setRoutes();
       this.start();
-      this.app.get("/", (req, res) => {
-        res.send("Hello, World!");
+      this.app.get("/test", (req, res) => {
+        res.send("Hello, This is Initiative service!");
       });
       
     }catch(error){
@@ -35,7 +33,7 @@ class App {
   }
 
   setRoutes() {
-    this.app.use('/',userRoutes);
+    this.app.use('/',initiativeRoutes);
   }
 
   async start() {

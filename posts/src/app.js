@@ -13,8 +13,8 @@ class App {
 
   async initialize(){
     try{
-      await connectDB();
-      await sequelize.sync();
+      // await connectDB();
+      // await sequelize.sync();
       this.setMiddlewares();
       this.setRoutes();
       this.start();

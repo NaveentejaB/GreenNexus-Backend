@@ -1,7 +1,10 @@
 const express = require("express");
 const { connectDB, disconnectDB, sequelize } = require("../src/config/DB");
 const winston = require('winston');
-const authRoutes = require('./routes/auth-routes')
+const initiativeRoutes = require('./routes/initiative-routes');
+const net = require('net');
+
+
 const BASE_PORT = 3003;
 
 
@@ -52,14 +55,17 @@ class App {
   }
 
   setRoutes() {
-    this.app.use('/', authRoutes);
+    this.app.use('/', initiativeRoutes);
   }
 
   async start() {
       try {
-        this.server = this.app.listen(BASE_PORT, () => {
-          logger.info(`Server successfully started on port ${BASE_PORT}`);
-        });
+
+
+          this.server = this.app.listen(BASE_PORT, () => {
+            logger.info(`Server successfully started on port ${BASE_PORT}`);
+          });
+        
       } catch (error) {
         logger.warn(`Failed to start on port ${BASE_PORT}:`, error);
       }

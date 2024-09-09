@@ -26,7 +26,8 @@ const Post = sequelize.define('Post',{
     },
     total_likes : {
         type : Sequelize.DataTypes.STRING,
-        allowNull : false
+        allowNull : false,
+        defaultValue : "0"
     },
     Created_at : {
         type:Sequelize.DataTypes.DATE,

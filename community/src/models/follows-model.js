@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize-cockroachdb')
 
-const {sequelize} = require('../config/DB')
+const {sequelize} = require('../../../posts/src/config/DB')
 
 if (!sequelize) {
     throw new Error('Sequelize instance is not initialized. Make sure to call connectDB first.');

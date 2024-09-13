@@ -20,6 +20,14 @@ const Follows = sequelize.define('Follows',{
         type : Sequelize.DataTypes.UUID,
         allowNull : false
     },
+    isPrivate :  {
+        type : Sequelize.DataTypes.BOOLEAN,
+        defaultValue : false
+    },
+    isAccepted : {
+        type : Sequelize.DataTypes.BOOLEAN,
+        defaultValue : false
+    },
     Created_at : {
         type:Sequelize.DataTypes.DATE,
         allowNull: false,

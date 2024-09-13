@@ -10,7 +10,7 @@ class CommentService{
         return comment;
     }
 
-    async deleteComment(comment_id){
+    async deleteCommentById(comment_id){
         const deletedcomment = await this.CommentRespository.deleteComment(comment_id);
         return deletedcomment;
     }
